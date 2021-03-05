@@ -7,7 +7,7 @@ Citizen.CreateThread(function()
 		Citizen.Wait(500)
 		local coords = GetEntityCoords(PlayerPedId())
 
-		if GetDistanceBetweenCoords(coords, Config.CircleZones.WeedField.coords, true) < 50 then
+		if GetDistanceBetweenCoords(coords, Config.CircleZones.WeedField.coords, true) < 15 then
 			SpawnWeedPlants()
 		end
 	end
@@ -21,7 +21,8 @@ Citizen.CreateThread(function()
 
 		if GetDistanceBetweenCoords(coords, Config.CircleZones.WeedProcessing.coords, true) < 1 then
 			if not isProcessing then
-				ESX.ShowHelpNotification(_U('weed_processprompt'))
+				--ESX.ShowHelpNotification(_U('weed_processprompt'))
+				TriggerClientEvent("pNotify:SendNotification", source, { text = _U('weed_processprompt'), type = "info", timeout = 2500, layout = "bottomCenter"})
 			end
 
 			if IsControlJustReleased(0, 38) and not isProcessing then
@@ -48,7 +49,8 @@ end)
 
 function ProcessWeed(xCannabis)
 	isProcessing = true
-	ESX.ShowNotification(_U('weed_processingstarted'))
+	--ESX.ShowNotification(_U('weed_processingstarted'))
+	TriggerClientEvent("pNotify:SendNotification", source, { text = _U('weed_processingstarted'), type = "info", timeout = 2500, layout = "bottomCenter"})
   TriggerServerEvent('esx_drugs:processCannabis')
 	if(xCannabis <= 3) then
 		xCannabis = 0
@@ -87,7 +89,9 @@ Citizen.CreateThread(function()
 
 		if nearbyObject and IsPedOnFoot(playerPed) then
 			if not isPickingUp then
-				ESX.ShowHelpNotification(_U('weed_pickupprompt'))
+				--ESX.ShowHelpNotification(_U('weed_pickupprompt'))
+				--TriggerClientEvent("pNotify:SendNotification", source, { text = _U('weed_pickupprompt'), type = "info", timeout = 2500, layout = "bottomCenter"})
+				exports.pNotify:SendNotification({text = _U('weed_pickupprompt'), type = "info", timeout = 2500})
 			end
 
 			if IsControlJustReleased(0, 38) and not isPickingUp then
@@ -108,7 +112,8 @@ Citizen.CreateThread(function()
 		
 						TriggerServerEvent('esx_drugs:pickedUpCannabis')
 					else
-						ESX.ShowNotification(_U('weed_inventoryfull'))
+						--ESX.ShowNotification(_U('weed_inventoryfull'))
+						TriggerClientEvent("pNotify:SendNotification", source, { text = _U('weed_inventoryfull'), type = "error", timeout = 2500, layout = "bottomCenter"})
 					end
 
 					isPickingUp = false
@@ -170,12 +175,12 @@ function GenerateWeedCoords()
 		local weedCoordX, weedCoordY
 
 		math.randomseed(GetGameTimer())
-		local modX = math.random(-90, 90)
+		local modX = math.random(-15, 15)
 
 		Citizen.Wait(100)
 
 		math.randomseed(GetGameTimer())
-		local modY = math.random(-90, 90)
+		local modY = math.random(-15, 15)
 
 		weedCoordX = Config.CircleZones.WeedField.coords.x + modX
 		weedCoordY = Config.CircleZones.WeedField.coords.y + modY

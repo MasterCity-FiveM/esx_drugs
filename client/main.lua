@@ -23,7 +23,9 @@ Citizen.CreateThread(function()
 
 		if GetDistanceBetweenCoords(coords, Config.CircleZones.DrugDealer.coords, true) < 0.5 then
 			if not menuOpen then
-				ESX.ShowHelpNotification(_U('dealer_prompt'))
+				--ESX.ShowHelpNotification(_U('dealer_prompt'))
+				--TriggerClientEvent("pNotify:SendNotification", source, { text = _U('dealer_prompt'), type = "info", timeout = 2500, layout = "bottomCenter"})
+				exports.pNotify:SendNotification({text = _U('dealer_prompt'), type = "info", timeout = 2500})
 
 				if IsControlJustReleased(0, 38) then
 					wasOpen = true

@@ -17,7 +17,8 @@ AddEventHandler('esx_drugs:sellDrug', function(itemName, amount)
 	end
 
 	if xItem.count < amount then
-		xPlayer.showNotification(_U('dealer_notenough'))
+		--xPlayer.showNotification(_U('dealer_notenough'))
+		TriggerClientEvent("pNotify:SendNotification", source, { text = _U('dealer_notenough'), type = "error", timeout = 2500, layout = "bottomCenter"})
 		return
 	end
 
@@ -30,7 +31,8 @@ AddEventHandler('esx_drugs:sellDrug', function(itemName, amount)
 	end
 
 	xPlayer.removeInventoryItem(xItem.name, amount)
-	xPlayer.showNotification(_U('dealer_sold', amount, xItem.label, ESX.Math.GroupDigits(price)))
+	--xPlayer.showNotification(_U('dealer_sold', amount, xItem.label, ESX.Math.GroupDigits(price)))
+	TriggerClientEvent("pNotify:SendNotification", source, { text = _U('dealer_sold'), type = "success", timeout = 2500, layout = "bottomCenter"})
 end)
 
 ESX.RegisterServerCallback('esx_drugs:buyLicense', function(source, cb, licenseName)
@@ -56,12 +58,13 @@ end)
 RegisterServerEvent('esx_drugs:pickedUpCannabis')
 AddEventHandler('esx_drugs:pickedUpCannabis', function()
 	local xPlayer = ESX.GetPlayerFromId(source)
-	local cime = math.random(5,10)
+	local cime = math.random(1,5)
 
 	if xPlayer.canCarryItem('cannabis', cime) then
 		xPlayer.addInventoryItem('cannabis', cime)
 	else
-		xPlayer.showNotification(_U('weed_inventoryfull'))
+		--xPlayer.showNotification(_U('weed_inventoryfull'))
+		TriggerClientEvent("pNotify:SendNotification", source, { text = _U('weed_inventoryfull'), type = "error", timeout = 2500, layout = "bottomCenter"})
 	end
 end)
 
@@ -94,23 +97,26 @@ AddEventHandler('esx_drugs:processCannabis', function()
 		local xCannabis = xPlayer.getInventoryItem('cannabis')
 		local can = true
 		outofbound = false
-    if xCannabis.count >= 3 then
+    if xCannabis.count >= 1 then
       while outofbound == false and can do
 				if playersProcessingCannabis[_source] == nil then
 					playersProcessingCannabis[_source] = ESX.SetTimeout(Config.Delays.WeedProcessing , function()
-            if xCannabis.count >= 3 then
-              if xPlayer.canSwapItem('cannabis', 3, 'marijuana', 1) then
-                xPlayer.removeInventoryItem('cannabis', 3)
-                xPlayer.addInventoryItem('marijuana', 1)
-								xPlayer.showNotification(_U('weed_processed'))
+            if xCannabis.count >= 1 then
+              if xPlayer.canSwapItem('cannabis', 1, 'marijuana', 3) then
+                xPlayer.removeInventoryItem('cannabis', 1)
+                xPlayer.addInventoryItem('marijuana', 3)
+								--xPlayer.showNotification(_U('weed_processed'))
+								TriggerClientEvent("pNotify:SendNotification", source, { text = _U('weed_processed'), type = "success", timeout = 2500, layout = "bottomCenter"})
 							else
 								can = false
-								xPlayer.showNotification(_U('weed_processingfull'))
+								--xPlayer.showNotification(_U('weed_processingfull'))
+								TriggerClientEvent("pNotify:SendNotification", source, { text = _U('weed_processingfull'), type = "error", timeout = 2500, layout = "bottomCenter"})
 								TriggerEvent('esx_drugs:cancelProcessing')
 							end
 						else						
 							can = false
-							xPlayer.showNotification(_U('weed_processingenough'))
+							--xPlayer.showNotification(_U('weed_processingenough'))
+							TriggerClientEvent("pNotify:SendNotification", source, { text = _U('weed_processingenough'), type = "error", timeout = 2500, layout = "bottomCenter"})
 							TriggerEvent('esx_drugs:cancelProcessing')
 						end
 
@@ -121,7 +127,8 @@ AddEventHandler('esx_drugs:processCannabis', function()
 				end	
 			end
 		else
-			xPlayer.showNotification(_U('weed_processingenough'))
+			--xPlayer.showNotification(_U('weed_processingenough'))
+			TriggerClientEvent("pNotify:SendNotification", source, { text = _U('weed_processingenough'), type = "error", timeout = 2500, layout = "bottomCenter"})
 			TriggerEvent('esx_drugs:cancelProcessing')
 		end	
 			

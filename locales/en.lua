@@ -1,21 +1,21 @@
 Locales ['en'] = {
   -- weed
-  ['weed_pickupprompt'] = 'press ~INPUT_CONTEXT~ to harvest the ~g~Cannabis~s~ plant.',
-  ['weed_quitprocess'] = 'press ~INPUT_CONTEXT~ to stop ~g~Process Cannabis~s~.',
-  ['weed_inventoryfull'] = 'you do not have any more inventory space for ~g~Cannabis~s~.',
-  ['weed_processprompt'] = 'press ~INPUT_CONTEXT~ to start ~g~Process Cannabis~s~.',
-  ['weed_processingstarted'] = 'processing ~g~Cannabis~s~ into ~g~Marijuana~s~...',
-  ['weed_processingfull'] = 'processing ~r~canceled~s~ due to full inventory!',
-  ['weed_processingenough'] = 'you must have ~b~3x~s~ ~g~Cannabis~s~ in order to process.',
-  ['weed_processed'] = 'you\'ve processed ~b~3x~s~ ~g~Cannabis~s~ to ~b~1x~s~ ~g~Marijuana~s~',
-  ['weed_processingtoofar'] = 'the processing has been ~r~canceled~s~ due to you abandoning the area.',
+  ['weed_pickupprompt'] = 'برای خم شدن و برداشت شاه دانه، کلید E رو فشار بده.',
+  ['weed_quitprocess'] = 'press ~INPUT_CONTEXT~ to stop ~g~Process Cannabis~s~.', -- دکمه اش رو نمیدونم
+  ['weed_inventoryfull'] = 'جیبات پره!',
+  ['weed_processprompt'] = 'با دکمه E میتونی گل رول کنی.',
+  ['weed_processingstarted'] = 'در حال رول کردن...',
+  ['weed_processingfull'] = 'به دلیل پر بودن جیبت از رول گل، دیگه نمیتونی رول کنی!',
+  ['weed_processingenough'] = 'شاه دانه نداری، چیو میخوای رول کنی؟:))',
+  ['weed_processed'] = 'با موفقیت یدونه شاه دونه رو تبدیل کردی به 5 تا رول',
+  ['weed_processingtoofar'] = 'از مکان دور شدی و رول کردن کنسل شد.',
 
   -- drug dealer
-  ['dealer_prompt'] = 'press ~INPUT_CONTEXT~ to talk with the ~r~Drug Dealer~s~.',
+  ['dealer_prompt'] = 'اگه می خوای با ساغی صحبت کنی، دکمه E رو فشار بده.',
   ['dealer_title'] = 'drug Dealer',
   ['dealer_item'] = '$%s',
-  ['dealer_notenough'] = 'you don\'t have enough of that to sell!',
-  ['dealer_sold'] = 'you\'ve sold ~b~%sx~s~ ~y~%s~s~ for ~g~$%s~s~',
+  ['dealer_notenough'] = 'انقد رول نداری که!!',
+  ['dealer_sold'] = '%sx %s به مبلغ $%s کاسب شدید!',
 
   -- license
   ['license_title'] = 'you are required to own a processing license to process this product, it can be bought here.',
@@ -25,7 +25,7 @@ Locales ['en'] = {
   ['license_weed'] = 'weed Processing License',
 
   -- blips
-  ['blip_weedfield'] = 'weed Field',
-  ['blip_weedprocessing'] = 'weed Processing',
-  ['blip_drugdealer'] = 'drug Dealer',
+  ['blip_weedfield'] = 'Zamine Gol',
+  ['blip_weedprocessing'] = 'Picheshe Gol',
+  ['blip_drugdealer'] = 'Saaghi',
 }

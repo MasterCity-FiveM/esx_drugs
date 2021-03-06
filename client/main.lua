@@ -116,7 +116,7 @@ function OpenBuyLicenseMenu(licenseName)
 			ESX.TriggerServerCallback('esx_drugs:buyLicense', function(boughtLicense)
 				if boughtLicense then
 					ESX.ShowNotification(_U('license_bought', data.current.licenseName, ESX.Math.GroupDigits(data.current.price)))
-				else
+				else           -- *** Niyazi be Translate Nist. Chonke License Use Nemikonim.
 					ESX.ShowNotification(_U('license_bought_fail', data.current.licenseName))
 				end
 			end, data.current.value)

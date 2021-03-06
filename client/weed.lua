@@ -22,7 +22,8 @@ Citizen.CreateThread(function()
 		if GetDistanceBetweenCoords(coords, Config.CircleZones.WeedProcessing.coords, true) < 1 then
 			if not isProcessing then
 				--ESX.ShowHelpNotification(_U('weed_processprompt'))
-				TriggerClientEvent("pNotify:SendNotification", source, { text = _U('weed_processprompt'), type = "info", timeout = 2500, layout = "bottomCenter"})
+				--TriggerClientEvent("pNotify:SendNotification", source, { text = _U('weed_processprompt'), type = "info", timeout = 2500, layout = "bottomCenter"})
+				exports.pNotify:SendNotification({text = _U('weed_processprompt'), type = "info", timeout = 2500})
 			end
 
 			if IsControlJustReleased(0, 38) and not isProcessing then
@@ -50,7 +51,8 @@ end)
 function ProcessWeed(xCannabis)
 	isProcessing = true
 	--ESX.ShowNotification(_U('weed_processingstarted'))
-	TriggerClientEvent("pNotify:SendNotification", source, { text = _U('weed_processingstarted'), type = "info", timeout = 2500, layout = "bottomCenter"})
+	--TriggerClientEvent("pNotify:SendNotification", source, { text = _U('weed_processingstarted'), type = "info", timeout = 2500, layout = "bottomCenter"})
+	exports.pNotify:SendNotification({text = _U('weed_processingstarted'), type = "info", timeout = 2500})
   TriggerServerEvent('esx_drugs:processCannabis')
 	if(xCannabis <= 3) then
 		xCannabis = 0
@@ -63,7 +65,8 @@ function ProcessWeed(xCannabis)
 		timeLeft = timeLeft - 1
 
 		if GetDistanceBetweenCoords(GetEntityCoords(playerPed), Config.CircleZones.WeedProcessing.coords, false) > 4 then
-			ESX.ShowNotification(_U('weed_processingtoofar'))
+			--ESX.ShowNotification(_U('weed_processingtoofar'))
+			exports.pNotify:SendNotification({text = _U('weed_processingtoofar'), type = "error", timeout = 2500})
 			TriggerServerEvent('esx_drugs:cancelProcessing')
 			TriggerServerEvent('esx_drugs:outofbound')
 			break
@@ -113,7 +116,8 @@ Citizen.CreateThread(function()
 						TriggerServerEvent('esx_drugs:pickedUpCannabis')
 					else
 						--ESX.ShowNotification(_U('weed_inventoryfull'))
-						TriggerClientEvent("pNotify:SendNotification", source, { text = _U('weed_inventoryfull'), type = "error", timeout = 2500, layout = "bottomCenter"})
+						--TriggerClientEvent("pNotify:SendNotification", source, { text = _U('weed_inventoryfull'), type = "error", timeout = 2500, layout = "bottomCenter"})
+						exports.pNotify:SendNotification({text = _U('weed_inventoryfull'), type = "error", timeout = 2500})
 					end
 
 					isPickingUp = false

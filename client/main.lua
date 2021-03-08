@@ -25,7 +25,8 @@ Citizen.CreateThread(function()
 			if not menuOpen then
 				--ESX.ShowHelpNotification(_U('dealer_prompt'))
 				--TriggerClientEvent("pNotify:SendNotification", source, { text = _U('dealer_prompt'), type = "info", timeout = 2500, layout = "bottomCenter"})
-				exports.pNotify:SendNotification({text = _U('dealer_prompt'), type = "info", timeout = 2500})
+				--exports.pNotify:SendNotification({text = _U('dealer_prompt'), type = "info", timeout = 2500})
+				ShowMessage(_U('dealer_prompt'))
 
 				if IsControlJustReleased(0, 38) then
 					wasOpen = true
@@ -156,3 +157,16 @@ Citizen.CreateThread(function()
 		CreateBlipCircle(zone.coords, zone.name, zone.radius, zone.color, zone.sprite)
 	end
 end)
+
+-- Merc az Amin bara inke in codo too ye resource dg gozashte bod va paste kardam
+local UnderShowMsg = false
+function ShowMessage(message)
+	Citizen.CreateThread(function()
+		if UnderShowMsg == false then
+			UnderShowMsg = true
+			exports.pNotify:SendNotification({text = message, type = "info", timeout = 2500})
+			Citizen.Wait(3300)
+			UnderShowMsg = false
+		end
+	end)
+end

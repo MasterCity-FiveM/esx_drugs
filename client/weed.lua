@@ -23,7 +23,8 @@ Citizen.CreateThread(function()
 			if not isProcessing then
 				--ESX.ShowHelpNotification(_U('weed_processprompt'))
 				--TriggerClientEvent("pNotify:SendNotification", source, { text = _U('weed_processprompt'), type = "info", timeout = 2500, layout = "bottomCenter"})
-				exports.pNotify:SendNotification({text = _U('weed_processprompt'), type = "info", timeout = 2500})
+				--exports.pNotify:SendNotification({text = _U('weed_processprompt'), type = "info", timeout = 2500})
+				ShowMessage(_U('weed_processprompt'))
 			end
 
 			if IsControlJustReleased(0, 38) and not isProcessing then
@@ -94,7 +95,8 @@ Citizen.CreateThread(function()
 			if not isPickingUp then
 				--ESX.ShowHelpNotification(_U('weed_pickupprompt'))
 				--TriggerClientEvent("pNotify:SendNotification", source, { text = _U('weed_pickupprompt'), type = "info", timeout = 2500, layout = "bottomCenter"})
-				exports.pNotify:SendNotification({text = _U('weed_pickupprompt'), type = "info", timeout = 2500})
+				--exports.pNotify:SendNotification({text = _U('weed_pickupprompt'), type = "info", timeout = 2500})
+				ShowMessage(_U('weed_pickupprompt'))
 			end
 
 			if IsControlJustReleased(0, 38) and not isPickingUp then
@@ -210,4 +212,17 @@ function GetCoordZ(x, y)
 	end
 
 	return 43.0
+end
+
+-- Merc az Amin bara inke in codo too ye resource dg gozashte bod va paste kardam
+local UnderShowMsg = false
+function ShowMessage(message)
+	Citizen.CreateThread(function()
+		if UnderShowMsg == false then
+			UnderShowMsg = true
+			exports.pNotify:SendNotification({text = message, type = "info", timeout = 2500})
+			Citizen.Wait(3300)
+			UnderShowMsg = false
+		end
+	end)
 end

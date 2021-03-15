@@ -20,8 +20,8 @@ Citizen.CreateThread(function()
 		Citizen.Wait(0)
 		local playerPed = PlayerPedId()
 		local coords = GetEntityCoords(playerPed)
-
-		if GetDistanceBetweenCoords(coords, Config.CircleZones.DrugDealer.coords, true) < 0.5 then
+		local distance = GetDistanceBetweenCoords(coords, Config.CircleZones.DrugDealer.coords, true)
+		if distance < 1.0 then
 			if not menuOpen then
 				--ESX.ShowHelpNotification(_U('dealer_prompt'))
 				--TriggerClientEvent("pNotify:SendNotification", source, { text = _U('dealer_prompt'), type = "info", timeout = 2500, layout = "bottomCenter"})
@@ -35,6 +35,8 @@ Citizen.CreateThread(function()
 			else
 				Citizen.Wait(500)
 			end
+		elseif distance > 30.0 then
+			Citizen.Wait(3000)
 		else
 			if wasOpen then
 				wasOpen = false
@@ -71,7 +73,7 @@ function OpenDrugShop()
 
 	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'drug_shop', {
 		title    = _U('dealer_title'),
-		align    = 'top-left',
+		align    = 'top-right',
 		elements = elements
 	}, function(data, menu)
 		TriggerServerEvent('esx_drugs:sellDrug', data.current.name, data.current.value)
@@ -109,7 +111,7 @@ function OpenBuyLicenseMenu(licenseName)
 
 	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'license_shop', {
 		title    = _U('license_title'),
-		align    = 'top-left',
+		align    = 'top-right',
 		elements = elements
 	}, function(data, menu)
 

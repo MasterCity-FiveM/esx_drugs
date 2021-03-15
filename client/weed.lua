@@ -1,14 +1,18 @@
 local spawnedWeeds = 0
 local weedPlants = {}
 local isPickingUp, isProcessing = false, false
+local allowspawn = true
 
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(500)
 		local coords = GetEntityCoords(PlayerPedId())
-
-		if GetDistanceBetweenCoords(coords, Config.CircleZones.WeedField.coords, true) < 15 then
+		local distance = GetDistanceBetweenCoords(coords, Config.CircleZones.WeedField.coords, true)
+		if distance < 15 then
 			SpawnWeedPlants()
+			Citizen.Wait(2000)
+		elseif distance > 30 then
+			Citizen.Wait(10000)
 		end
 	end
 end)
@@ -18,8 +22,8 @@ Citizen.CreateThread(function()
 		Citizen.Wait(0)
 		local playerPed = PlayerPedId()
 		local coords = GetEntityCoords(playerPed)
-
-		if GetDistanceBetweenCoords(coords, Config.CircleZones.WeedProcessing.coords, true) < 1 then
+		local distance = GetDistanceBetweenCoords(coords, Config.CircleZones.WeedProcessing.coords, true)
+		if distance < 1 then
 			if not isProcessing then
 				--ESX.ShowHelpNotification(_U('weed_processprompt'))
 				--TriggerClientEvent("pNotify:SendNotification", source, { text = _U('weed_processprompt'), type = "info", timeout = 2500, layout = "bottomCenter"})
@@ -40,9 +44,10 @@ Citizen.CreateThread(function()
 					ESX.TriggerServerCallback('esx_drugs:cannabis_count', function(xCannabis)
 						ProcessWeed(xCannabis)
 					end)
-					
 				end
 			end
+		elseif distance > 30 then
+			Citizen.Wait(3000)
 		else
 			Citizen.Wait(500)
 		end
@@ -84,10 +89,15 @@ Citizen.CreateThread(function()
 		local playerPed = PlayerPedId()
 		local coords = GetEntityCoords(playerPed)
 		local nearbyObject, nearbyID
-
+		local let_sleep = true
+		
 		for i=1, #weedPlants, 1 do
-			if GetDistanceBetweenCoords(coords, GetEntityCoords(weedPlants[i]), false) < 1 then
+			local distance = GetDistanceBetweenCoords(coords, GetEntityCoords(weedPlants[i]), false)
+			if distance < 1 then
 				nearbyObject, nearbyID = weedPlants[i], i
+				let_sleep = false
+			elseif distance < 30 then
+				let_sleep = false
 			end
 		end
 
@@ -125,6 +135,8 @@ Citizen.CreateThread(function()
 					isPickingUp = false
 				end, 'cannabis')
 			end
+		elseif let_sleep then
+			Citizen.Wait(2500)
 		else
 			Citizen.Wait(500)
 		end
@@ -140,18 +152,29 @@ AddEventHandler('onResourceStop', function(resource)
 end)
 
 function SpawnWeedPlants()
-	while spawnedWeeds < 25 do
-		Citizen.Wait(0)
-		local weedCoords = GenerateWeedCoords()
-
-		ESX.Game.SpawnLocalObject('prop_weed_02', weedCoords, function(obj)
-			PlaceObjectOnGroundProperly(obj)
-			FreezeEntityPosition(obj, true)
-
-			table.insert(weedPlants, obj)
-			spawnedWeeds = spawnedWeeds + 1
-		end)
+	if not allowspawn then
+		return false
 	end
+	
+	Citizen.CreateThread(function()
+		allowspawn = false
+		tmp = spawnedWeeds
+		while tmp < 25 do
+			Citizen.Wait(0)
+			local weedCoords = GenerateWeedCoords()
+			ESX.Game.SpawnLocalObject('prop_weed_02', weedCoords, function(obj)
+				PlaceObjectOnGroundProperly(obj)
+				FreezeEntityPosition(obj, true)
+
+				table.insert(weedPlants, obj)
+				spawnedWeeds = spawnedWeeds + 1
+				tmp = tmp + 1
+			end)
+		end
+		
+		Citizen.Wait(120000)
+		allowspawn = true
+	end)
 end
 
 function ValidateWeedCoord(plantCoord)

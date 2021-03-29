@@ -7,6 +7,7 @@ TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
 RegisterServerEvent('esx_drugs:sellDrug')
 AddEventHandler('esx_drugs:sellDrug', function(itemName, amount)
+	ESX.RunCustomFunction("anti_ddos", source, 'esx_drugs:sellDrug', {itemName = itemName, amount = amount})
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
 	local price = Config.DrugDealerItems[itemName]
@@ -37,6 +38,7 @@ AddEventHandler('esx_drugs:sellDrug', function(itemName, amount)
 end)
 
 ESX.RegisterServerCallback('esx_drugs:buyLicense', function(source, cb, licenseName)
+	ESX.RunCustomFunction("anti_ddos", source, 'esx_drugs:buyLicense', {licenseName = licenseName})
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local license = Config.LicensePrices[licenseName]
 
@@ -58,6 +60,7 @@ end)
 
 RegisterServerEvent('esx_drugs:pickedUpCannabis')
 AddEventHandler('esx_drugs:pickedUpCannabis', function()
+	ESX.RunCustomFunction("anti_ddos", source, 'esx_drugs:pickedUpCannabis', {})
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local cime = math.random(1,3)
 
@@ -70,21 +73,25 @@ AddEventHandler('esx_drugs:pickedUpCannabis', function()
 end)
 
 ESX.RegisterServerCallback('esx_drugs:canPickUp', function(source, cb, item)
+	ESX.RunCustomFunction("anti_ddos", source, 'esx_drugs:canPickUp', {item = item})
 	local xPlayer = ESX.GetPlayerFromId(source)
 	cb(xPlayer.canCarryItem(item, 1))
 end)
 
 RegisterServerEvent('esx_drugs:outofbound')
 AddEventHandler('esx_drugs:outofbound', function()
+	ESX.RunCustomFunction("anti_ddos", source, 'esx_drugs:outofbound', {})
 	outofbound = true
 end)
 
 RegisterServerEvent('esx_drugs:quitprocess')
 AddEventHandler('esx_drugs:quitprocess', function()
+	ESX.RunCustomFunction("anti_ddos", source, 'esx_drugs:quitprocess', {})
 	can = false
 end)
 
 ESX.RegisterServerCallback('esx_drugs:cannabis_count', function(source, cb)
+	ESX.RunCustomFunction("anti_ddos", source, 'esx_drugs:cannabis_count', {})
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local xCannabis = xPlayer.getInventoryItem('cannabis').count
 	cb(xCannabis)
@@ -92,6 +99,7 @@ end)
 
 RegisterServerEvent('esx_drugs:processCannabis')
 AddEventHandler('esx_drugs:processCannabis', function()
+	ESX.RunCustomFunction("anti_ddos", source, 'esx_drugs:processCannabis', {})
 	if not playersProcessingCannabis[source] then
 		local _source = source
 		local xPlayer = ESX.GetPlayerFromId(_source)
@@ -146,6 +154,7 @@ end
 
 RegisterServerEvent('esx_drugs:cancelProcessing')
 AddEventHandler('esx_drugs:cancelProcessing', function()
+	ESX.RunCustomFunction("anti_ddos", source, 'esx_drugs:cancelProcessing', {})
 	CancelProcessing(source)
 end)
 

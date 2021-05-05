@@ -21,21 +21,15 @@ Citizen.CreateThread(function()
 		local playerPed = PlayerPedId()
 		local coords = GetEntityCoords(playerPed)
 		local distance = GetDistanceBetweenCoords(coords, Config.CircleZones.DrugDealer.coords, true)
-		if distance < 1.0 then
-			if not menuOpen then
-				--ESX.ShowHelpNotification(_U('dealer_prompt'))
-				--TriggerClientEvent("pNotify:SendNotification", source, { text = _U('dealer_prompt'), type = "info", timeout = 2500, layout = "bottomCenter"})
-				--exports.pNotify:SendNotification({text = _U('dealer_prompt'), type = "info", timeout = 2500})
-				ShowMessage(_U('dealer_prompt'))
-
-				if IsControlJustReleased(0, 38) then
-					wasOpen = true
-					OpenDrugShop()
-				end
-			else
-				Citizen.Wait(500)
+		if distance < 2.0 then
+			ShowMessage(_U('dealer_prompt'))
+			if IsControlJustReleased(0, 38) then
+				ESX.UI.Menu.CloseAll()
+				wasOpen = true
+				OpenDrugShop()
 			end
 		elseif distance > 30.0 then
+			wasOpen = false
 			Citizen.Wait(3000)
 		else
 			if wasOpen then

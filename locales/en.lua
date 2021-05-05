@@ -7,7 +7,7 @@ Locales ['en'] = {
   ['weed_processingstarted'] = 'در حال رول کردن...',
   ['weed_processingfull'] = 'به دلیل پر بودن جیبت از رول گل، دیگه نمیتونی رول کنی!',
   ['weed_processingenough'] = 'شاه دانه نداری، چیو میخوای رول کنی؟:))',
-  ['weed_processed'] = 'با موفقیت یدونه شاه دونه رو تبدیل کردی به 5 تا رول',
+  ['weed_processed'] = 'با موفقیت یدونه شاه دونه رو تبدیل کردی به 3 تا رول',
   ['weed_processingtoofar'] = 'از مکان دور شدی و رول کردن کنسل شد.',
 
   -- drug dealer

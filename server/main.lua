@@ -141,7 +141,7 @@ AddEventHandler('esx_drugs:processCannabis', function()
 			CancelProcessing(_source)
 		end	
 	else
-		print(('esx_drugs: %s attempted to exploit weed processing!'):format(GetPlayerIdentifiers(_source)[1]))
+		--print(('esx_drugs: %s attempted to exploit weed processing!'):format(GetPlayerIdentifiers(_source)[1]))
 	end
 end)
 

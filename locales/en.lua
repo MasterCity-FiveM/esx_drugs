@@ -11,7 +11,7 @@ Locales ['en'] = {
   ['weed_processingtoofar'] = 'از مکان دور شدی و رول کردن کنسل شد.',
 
   -- drug dealer
-  ['dealer_prompt'] = 'اگه می خوای با ساغی صحبت کنی، دکمه E رو فشار بده.',
+  ['dealer_prompt'] = 'اگه می خوای با ساقی صحبت کنی، دکمه E رو فشار بده.',
   ['dealer_title'] = 'drug Dealer',
   ['dealer_item'] = '$%s',
   ['dealer_notenough'] = 'انقد رول نداری که!!',

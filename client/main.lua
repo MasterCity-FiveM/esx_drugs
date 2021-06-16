@@ -85,47 +85,6 @@ AddEventHandler('onResourceStop', function(resource)
 	end
 end)
 
-function OpenBuyLicenseMenu(licenseName)
-	menuOpen = true
-	local license = Config.LicensePrices[licenseName]
-
-	local elements = {
-		{
-			label = _U('license_no'),
-			value = 'no'
-		},
-
-		{
-			label = ('%s - <span style="color:green;">%s</span>'):format(license.label, _U('dealer_item', ESX.Math.GroupDigits(license.price))),
-			value = licenseName,
-			price = license.price,
-			licenseName = license.label
-		}
-	}
-
-	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'license_shop', {
-		title    = _U('license_title'),
-		align    = 'top-right',
-		elements = elements
-	}, function(data, menu)
-
-		if data.current.value ~= 'no' then
-			ESX.TriggerServerCallback('esx_drugs:buyLicense', function(boughtLicense)
-				if boughtLicense then
-					ESX.ShowNotification(_U('license_bought', data.current.licenseName, ESX.Math.GroupDigits(data.current.price)))
-				else           -- *** Niyazi be Translate Nist. Chonke License Use Nemikonim.
-					ESX.ShowNotification(_U('license_bought_fail', data.current.licenseName))
-				end
-			end, data.current.value)
-		else
-			menu.close()
-		end
-
-	end, function(data, menu)
-		menu.close()
-		menuOpen = false
-	end)
-end
 
 function CreateBlipCircle(coords, text, radius, color, sprite)
 	local blip = AddBlipForRadius(coords, radius)
